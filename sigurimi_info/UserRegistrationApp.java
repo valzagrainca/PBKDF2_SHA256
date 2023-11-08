@@ -1,8 +1,12 @@
 package sigurimi_info;
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -44,59 +48,214 @@ public class UserRegistrationApp {
     private static JPanel createCenteredPanel(Component content) {
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
-        constraints.insets = new Insets(10, 10, 10, 10); // Add padding
+        constraints.insets = new Insets(5, 5, 5, 5); // Add padding
 
         panel.add(content, constraints);
         return panel;
     }
 
     private static JPanel createRegistrationPanel() {
-        JPanel panel = new JPanel(new GridLayout(3, 2));
-
-        JLabel usernameLabel = new JLabel("Username:");
-        JTextField usernameField = new JTextField();
-        JLabel passwordLabel = new JLabel("Password:");
-        JPasswordField passwordField = new JPasswordField();
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.insets = new Insets(5, 5, 5, 5); // Add padding
+        constraints.anchor = GridBagConstraints.WEST;
+    
+        JLabel usernameLabel = new JLabel("Username");
+        JTextField usernameField = new JTextField(20);
+        JLabel passwordLabel = new JLabel("Password");
+        JPasswordField passwordField = new JPasswordField(20);
         JButton registerButton = new JButton("Register");
-
-        panel.add(usernameLabel);
-        panel.add(usernameField);
-        panel.add(passwordLabel);
-        panel.add(passwordField);
-        panel.add(new JLabel()); 
-        panel.add(registerButton);
-
+        JButton clearButton = new JButton("Clear");
+    
+        Font customFont = new Font("Arial", Font.BOLD, 13);
+        usernameLabel.setFont(customFont);
+        passwordLabel.setFont(customFont);
+        registerButton.setFont(customFont);
+        clearButton.setFont(customFont);
+    
+        // Set the same height for both usernameField and passwordField
+        int fieldHeight = 25; // Adjust the height as needed
+        usernameField.setPreferredSize(new Dimension(usernameField.getPreferredSize().width, fieldHeight));
+        passwordField.setPreferredSize(new Dimension(passwordField.getPreferredSize().width, fieldHeight));
+    
+        // Create a custom border with an initial underline color
+        final Border[] underlinedBorder = {BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY)};
+    
+        // Add focus listeners to change the border color on focus
+        usernameField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                underlinedBorder[0] = BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLUE);
+                usernameField.setBorder(underlinedBorder[0]);
+            }
+    
+            @Override
+            public void focusLost(FocusEvent e) {
+                underlinedBorder[0] = BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY); 
+                usernameField.setBorder(underlinedBorder[0]);
+            }
+        });
+    
+        passwordField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                underlinedBorder[0] = BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLUE); 
+                passwordField.setBorder(underlinedBorder[0]);
+            }
+    
+            @Override
+            public void focusLost(FocusEvent e) {
+                underlinedBorder[0] = BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY); 
+                passwordField.setBorder(underlinedBorder[0]);
+            }
+        });
+    
+        // Set a fixed size for the buttons
+        Dimension buttonDimension = new Dimension(89, 25); // Adjust the dimensions as needed
+        registerButton.setPreferredSize(buttonDimension);
+        clearButton.setPreferredSize(buttonDimension);
+    
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        panel.add(usernameLabel, constraints);
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        panel.add(usernameField, constraints);
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        panel.add(passwordLabel, constraints);
+        constraints.gridx = 0;
+        constraints.gridy = 3;
+        panel.add(passwordField, constraints);
+    
+        // Create a panel for buttons and add both buttons to it
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(registerButton);
+    
+        // Add space between the buttons using empty labels
+        JLabel spaceLabel = new JLabel("   "); // Add more spaces as needed
+        buttonPanel.add(spaceLabel);
+    
+        buttonPanel.add(clearButton);
+    
+        constraints.gridx = 0;
+        constraints.gridy = 4;
+        constraints.gridwidth = 2;
+        panel.add(buttonPanel, constraints);
+    
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
-
+    
                 registerUser(username, password);
-
+    
                 JOptionPane.showMessageDialog(panel, "Registration successful.");
             }
         });
 
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Add code to clear the fields here
+                usernameField.setText("");
+                passwordField.setText("");
+            }
+        });
+    
         return panel;
     }
-
+    
     private static JPanel createLoginPanel() {
-        JPanel panel = new JPanel(new GridLayout(3, 2));
-
-        JLabel usernameLabel = new JLabel("Username:");
-        JTextField usernameField = new JTextField();
-        JLabel passwordLabel = new JLabel("Password:");
-        JPasswordField passwordField = new JPasswordField();
+        JPanel panel = new JPanel(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.insets = new Insets(5, 5, 5, 5); // Add padding
+        constraints.anchor = GridBagConstraints.WEST;
+    
+        JLabel usernameLabel = new JLabel("Username");
+        JTextField usernameField = new JTextField(20);
+        JLabel passwordLabel = new JLabel("Password");
+        JPasswordField passwordField = new JPasswordField(20);
         JButton loginButton = new JButton("Login");
-
-        panel.add(usernameLabel);
-        panel.add(usernameField);
-        panel.add(passwordLabel);
-        panel.add(passwordField);
-        panel.add(new JLabel()); 
-        panel.add(loginButton);
-
+        JButton clearButton = new JButton("Clear");
+    
+        Font customFont = new Font("Arial", Font.BOLD, 13);
+        usernameLabel.setFont(customFont);
+        passwordLabel.setFont(customFont);
+        loginButton.setFont(customFont);
+        clearButton.setFont(customFont);
+    
+        // Set the same height for both usernameField and passwordField
+        int fieldHeight = 25; // Adjust the height as needed
+        usernameField.setPreferredSize(new Dimension(usernameField.getPreferredSize().width, fieldHeight));
+        passwordField.setPreferredSize(new Dimension(passwordField.getPreferredSize().width, fieldHeight));
+    
+        // Create a custom border with an initial underline color
+        final Border[] underlinedBorder = {BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY)};
+    
+        // Add focus listeners to change the border color on focus
+        usernameField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                underlinedBorder[0] = BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLUE);
+                usernameField.setBorder(underlinedBorder[0]);
+            }
+    
+            @Override
+            public void focusLost(FocusEvent e) {
+                underlinedBorder[0] = BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY); 
+                usernameField.setBorder(underlinedBorder[0]);
+            }
+        });
+    
+        passwordField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                underlinedBorder[0] = BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLUE); 
+                passwordField.setBorder(underlinedBorder[0]);
+            }
+    
+            @Override
+            public void focusLost(FocusEvent e) {
+                underlinedBorder[0] = BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY); 
+                passwordField.setBorder(underlinedBorder[0]);
+            }
+        });
+    
+        // Set a fixed size for the buttons
+        Dimension buttonDimension = new Dimension(89, 25); // Adjust the dimensions as needed
+        loginButton.setPreferredSize(buttonDimension);
+        clearButton.setPreferredSize(buttonDimension);
+    
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        panel.add(usernameLabel, constraints);
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        panel.add(usernameField, constraints);
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        panel.add(passwordLabel, constraints);
+        constraints.gridx = 0;
+        constraints.gridy = 3;
+        panel.add(passwordField, constraints);
+    
+        // Create a panel for buttons and add both buttons to it
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(loginButton);
+    
+        // Add space between the buttons using empty labels
+        JLabel spaceLabel = new JLabel("   "); // Add more spaces as needed
+        buttonPanel.add(spaceLabel);
+    
+        buttonPanel.add(clearButton);
+    
+        constraints.gridx = 0;
+        constraints.gridy = 4;
+        constraints.gridwidth = 2;
+        panel.add(buttonPanel, constraints);
+    
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -110,11 +269,19 @@ public class UserRegistrationApp {
                 }
             }
         });
-
+    
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Add code to clear the fields here
+                usernameField.setText("");
+                passwordField.setText("");
+            }
+        });
+    
         return panel;
     }
-
-
+    
     private static void registerUser(String username, String password) {
         try {
             Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/InformationSecurity", "postgres", "1234");
