@@ -1,6 +1,8 @@
 package sigurimi_info;
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -34,6 +36,11 @@ public class UserRegistrationApp {
         JPanel loginPanel = createCenteredPanel(createLoginPanel());
         tabbedPane.addTab("Login", loginPanel);
 
+        tabbedPane.setForegroundAt(0, Color.decode("#164863")); 
+        tabbedPane.setBackgroundAt(0, Color.decode("#DDF2FD")); 
+        tabbedPane.setForegroundAt(1, Color.decode("#164863")); 
+        tabbedPane.setBackgroundAt(1, Color.decode("#DDF2FD")); 
+
         frame.add(tabbedPane);
         frame.setVisible(true);
     }
@@ -47,6 +54,7 @@ public class UserRegistrationApp {
 
     private static JPanel createCenteredPanel(Component content) {
         JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(Color.decode("#164863"));
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.insets = new Insets(5, 5, 5, 5); // Add padding
 
@@ -56,6 +64,7 @@ public class UserRegistrationApp {
 
     private static JPanel createRegistrationPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(Color.decode("#164863"));
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.insets = new Insets(5, 5, 5, 5); // Add padding
         constraints.anchor = GridBagConstraints.WEST;
@@ -72,6 +81,9 @@ public class UserRegistrationApp {
         passwordLabel.setFont(customFont);
         registerButton.setFont(customFont);
         clearButton.setFont(customFont);
+
+        usernameLabel.setForeground(Color.decode("#DDF2FD"));
+        passwordLabel.setForeground(Color.decode("#DDF2FD"));
     
         // Set the same height for both usernameField and passwordField
         int fieldHeight = 25; // Adjust the height as needed
@@ -85,7 +97,7 @@ public class UserRegistrationApp {
         usernameField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                underlinedBorder[0] = BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLUE);
+                underlinedBorder[0] = BorderFactory.createMatteBorder(0, 0, 3, 0, Color.decode("#87C4FF"));
                 usernameField.setBorder(underlinedBorder[0]);
             }
     
@@ -99,7 +111,7 @@ public class UserRegistrationApp {
         passwordField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                underlinedBorder[0] = BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLUE); 
+                underlinedBorder[0] = BorderFactory.createMatteBorder(0, 0, 3, 0, Color.decode("#87C4FF")); 
                 passwordField.setBorder(underlinedBorder[0]);
             }
     
@@ -130,6 +142,7 @@ public class UserRegistrationApp {
     
         // Create a panel for buttons and add both buttons to it
         JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(Color.decode("#164863"));
         buttonPanel.add(registerButton);
     
         // Add space between the buttons using empty labels
@@ -169,6 +182,7 @@ public class UserRegistrationApp {
     
     private static JPanel createLoginPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(Color.decode("#164863"));
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.insets = new Insets(5, 5, 5, 5); // Add padding
         constraints.anchor = GridBagConstraints.WEST;
@@ -185,6 +199,9 @@ public class UserRegistrationApp {
         passwordLabel.setFont(customFont);
         loginButton.setFont(customFont);
         clearButton.setFont(customFont);
+
+        usernameLabel.setForeground(Color.decode("#DDF2FD"));
+        passwordLabel.setForeground(Color.decode("#DDF2FD"));
     
         // Set the same height for both usernameField and passwordField
         int fieldHeight = 25; // Adjust the height as needed
@@ -198,7 +215,7 @@ public class UserRegistrationApp {
         usernameField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                underlinedBorder[0] = BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLUE);
+                underlinedBorder[0] = BorderFactory.createMatteBorder(0, 0, 3, 0, Color.decode("#87C4FF"));
                 usernameField.setBorder(underlinedBorder[0]);
             }
     
@@ -212,7 +229,7 @@ public class UserRegistrationApp {
         passwordField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                underlinedBorder[0] = BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLUE); 
+                underlinedBorder[0] = BorderFactory.createMatteBorder(0, 0, 3, 0, Color.decode("#87C4FF")); 
                 passwordField.setBorder(underlinedBorder[0]);
             }
     
@@ -227,6 +244,11 @@ public class UserRegistrationApp {
         Dimension buttonDimension = new Dimension(89, 25); // Adjust the dimensions as needed
         loginButton.setPreferredSize(buttonDimension);
         clearButton.setPreferredSize(buttonDimension);
+
+        loginButton.setForeground(Color.decode("#164863"));
+        loginButton.setBackground(Color.decode("#DDF2FD"));
+        clearButton.setForeground(Color.decode("#164863"));
+        clearButton.setBackground(Color.decode("#DDF2FD"));
     
         constraints.gridx = 0;
         constraints.gridy = 0;
@@ -243,6 +265,7 @@ public class UserRegistrationApp {
     
         // Create a panel for buttons and add both buttons to it
         JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(Color.decode("#164863"));
         buttonPanel.add(loginButton);
     
         // Add space between the buttons using empty labels
