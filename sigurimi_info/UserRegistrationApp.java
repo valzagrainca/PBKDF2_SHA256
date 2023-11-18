@@ -1,8 +1,6 @@
 package sigurimi_info;
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
