@@ -13,8 +13,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Base64;
+import io.github.cdimascio.dotenv.Dotenv;
 
 public class UserRegistrationApp {
+    static Dotenv dotenv = Dotenv.load();
+    static String dbUsername = dotenv.get("DB_USERNAME");
+    static String dbPassword = dotenv.get("DB_PASSWORD");
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> createAndShowGUI());
     }
@@ -54,7 +58,7 @@ public class UserRegistrationApp {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(Color.decode("#164863"));
         GridBagConstraints constraints = new GridBagConstraints();
-        constraints.insets = new Insets(5, 5, 5, 5); // Add padding
+        constraints.insets = new Insets(5, 5, 5, 5);
 
         panel.add(content, constraints);
         return panel;
@@ -64,7 +68,7 @@ public class UserRegistrationApp {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(Color.decode("#164863"));
         GridBagConstraints constraints = new GridBagConstraints();
-        constraints.insets = new Insets(5, 5, 5, 5); // Add padding
+        constraints.insets = new Insets(5, 5, 5, 5);
         constraints.anchor = GridBagConstraints.WEST;
     
         JLabel usernameLabel = new JLabel("Username");
@@ -83,12 +87,10 @@ public class UserRegistrationApp {
         usernameLabel.setForeground(Color.decode("#DDF2FD"));
         passwordLabel.setForeground(Color.decode("#DDF2FD"));
     
-        // Set the same height for both usernameField and passwordField
-        int fieldHeight = 25; // Adjust the height as needed
+        int fieldHeight = 25;
         usernameField.setPreferredSize(new Dimension(usernameField.getPreferredSize().width, fieldHeight));
         passwordField.setPreferredSize(new Dimension(passwordField.getPreferredSize().width, fieldHeight));
     
-        // Create a custom border with an initial underline color
         final Border[] underlinedBorder = {BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY)};
     
         // Add focus listeners to change the border color on focus
@@ -120,8 +122,7 @@ public class UserRegistrationApp {
             }
         });
     
-        // Set a fixed size for the buttons
-        Dimension buttonDimension = new Dimension(89, 25); // Adjust the dimensions as needed
+        Dimension buttonDimension = new Dimension(89, 25);
         registerButton.setPreferredSize(buttonDimension);
         clearButton.setPreferredSize(buttonDimension);
     
@@ -138,13 +139,11 @@ public class UserRegistrationApp {
         constraints.gridy = 3;
         panel.add(passwordField, constraints);
     
-        // Create a panel for buttons and add both buttons to it
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Color.decode("#164863"));
         buttonPanel.add(registerButton);
     
-        // Add space between the buttons using empty labels
-        JLabel spaceLabel = new JLabel("   "); // Add more spaces as needed
+        JLabel spaceLabel = new JLabel("   ");
         buttonPanel.add(spaceLabel);
     
         buttonPanel.add(clearButton);
@@ -169,7 +168,6 @@ public class UserRegistrationApp {
         clearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Add code to clear the fields here
                 usernameField.setText("");
                 passwordField.setText("");
             }
@@ -182,7 +180,7 @@ public class UserRegistrationApp {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(Color.decode("#164863"));
         GridBagConstraints constraints = new GridBagConstraints();
-        constraints.insets = new Insets(5, 5, 5, 5); // Add padding
+        constraints.insets = new Insets(5, 5, 5, 5);
         constraints.anchor = GridBagConstraints.WEST;
     
         JLabel usernameLabel = new JLabel("Username");
@@ -201,12 +199,10 @@ public class UserRegistrationApp {
         usernameLabel.setForeground(Color.decode("#DDF2FD"));
         passwordLabel.setForeground(Color.decode("#DDF2FD"));
     
-        // Set the same height for both usernameField and passwordField
-        int fieldHeight = 25; // Adjust the height as needed
+        int fieldHeight = 25;
         usernameField.setPreferredSize(new Dimension(usernameField.getPreferredSize().width, fieldHeight));
         passwordField.setPreferredSize(new Dimension(passwordField.getPreferredSize().width, fieldHeight));
     
-        // Create a custom border with an initial underline color
         final Border[] underlinedBorder = {BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY)};
     
         // Add focus listeners to change the border color on focus
@@ -238,8 +234,7 @@ public class UserRegistrationApp {
             }
         });
     
-        // Set a fixed size for the buttons
-        Dimension buttonDimension = new Dimension(89, 25); // Adjust the dimensions as needed
+        Dimension buttonDimension = new Dimension(89, 25);
         loginButton.setPreferredSize(buttonDimension);
         clearButton.setPreferredSize(buttonDimension);
 
@@ -261,13 +256,11 @@ public class UserRegistrationApp {
         constraints.gridy = 3;
         panel.add(passwordField, constraints);
     
-        // Create a panel for buttons and add both buttons to it
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Color.decode("#164863"));
         buttonPanel.add(loginButton);
     
-        // Add space between the buttons using empty labels
-        JLabel spaceLabel = new JLabel("   "); // Add more spaces as needed
+        JLabel spaceLabel = new JLabel("   ");
         buttonPanel.add(spaceLabel);
     
         buttonPanel.add(clearButton);
@@ -282,7 +275,7 @@ public class UserRegistrationApp {
             public void actionPerformed(ActionEvent e) {
                 String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
-                // Call a method to validate the login
+                // Call the method to validate the login
                 if (validateLogin(username, password)) {
                     JOptionPane.showMessageDialog(panel, "Login successful.");
                 } else {
@@ -294,7 +287,6 @@ public class UserRegistrationApp {
         clearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Add code to clear the fields here
                 usernameField.setText("");
                 passwordField.setText("");
             }
@@ -305,7 +297,7 @@ public class UserRegistrationApp {
     
     private static void registerUser(String username, String password) {
         try {
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/InformationSecurity", "postgres", "1234");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/InformationSecurity", dbUsername, dbPassword);
             String insertQuery = "INSERT INTO users_credentials (username, password_hash, password_salt) VALUES (?, ?, ?)";
             
             PasswordHashResult hashResult = hashPassword(password);
@@ -334,7 +326,7 @@ public class UserRegistrationApp {
     // Add a method to validate the login
     private static boolean validateLogin(String username, String password) {
         try {
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/InformationSecurity", "postgres", "1234");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/InformationSecurity", dbUsername, dbPassword);
             String selectQuery = "SELECT username, password_hash, password_salt FROM users_credentials WHERE username = ?";
 
             PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
